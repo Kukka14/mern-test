@@ -15,16 +15,28 @@ app.use(express.json());
 
 app.get('/users', (req, res) => {
     var resObj = [];
-    controller.getUsers(users => {
-        res.send(users);
+    controller.getUsers((req, res, next) => {
+        res.send();
     });
 });
 
-app.get('/user', (req, res) => {
-    const id = req.query.id;
-    controller.getUsersById(id, user => {
-        res.send(user);
-    });
+app.post('/createuser', (req, res) => {
+    controller.addUser(req.body, (callack) => {
+        res.send();
+    }); 
 });
  
+app.post('/updateuser', (req, res) => {
+    controller.updateUser(req.body, (callack) => {
+        res.send(callack);
+    }); 
+});
+
+app.post('/deleteuser', (req, res) => {
+    controller.deleteUser(req.body, (callack) => {
+        res.send(callack);
+    }); 
+});
+
+
 module.exports = app;
